@@ -1,17 +1,15 @@
 #!/usr/bin/env python2
 
-class AppRunner:
-    testvar = 123
-    
-    def run(self):
-        print ('hello, world: {}'.format(self.testvar))
-        print ('Some text')
+class qwe:
+    value_text = 'Value: '
+
+    def __init__(self, value):
+        self.initial_value = value**2
+
+    def print_value(self):
+        print('{}{}'.format(self.value_text, self.initial_value))
 
 if __name__ == '__main__':
-    test = AppRunner()
-    test.testvar = 'test1'
-    test.run()
-    
-    test2 = AppRunner()
-    test2.testvar = 'test2'
-    test2.run()
+    class_instance = qwe(22) 
+    class_instance.print_value()
+
