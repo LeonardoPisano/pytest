@@ -5,6 +5,7 @@ class AppRunner:
     
     def run(self):
         print ('hello, world: {}'.format(self.testvar))
+        print ('Some text')
 
 if __name__ == '__main__':
     test = AppRunner()
