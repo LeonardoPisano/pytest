@@ -2,24 +2,24 @@
 <shop>
 	<clients>
 		<client
-			surname="Акакиевич"
 			name="Акакий"
+			surname="Акакиевич"
 			secname="Акаиев"
 			address="г. Саратов, ул. Московская, д. 140"
 			phone="438980"
 			email="ivan@mail.ru"
 			permanent="0"/>
 		<client
-			surname="Игоревич"
 			name="Игорь"
+			surname="Игоревич"
 			secname="Чудов"
 			address="г. Энгельс, ул. Cтепная, д. 126"
 			phone="89372665134"
 			email="nir@sarfsc.ru"
 			permanent="1"/>
 		<client
-			surname="Анатольевна"
 			name="Анастасия"
+			surname="Анатольевна"
 			secname="Береснева"
 			address="г. Нижний Тагил, пр. Вагоностроителей, д. 14"
 			phone="89649981880"
