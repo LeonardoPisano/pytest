@@ -29,7 +29,7 @@ class product:                #класс товаров
         '''
         Возвращаем название продукта.
         '''
-        return self.__designation      
+        return self.__designation
 
     def getPrice (self):
         '''

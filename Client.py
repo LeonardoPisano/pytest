@@ -7,9 +7,9 @@ class client:                #класс клиентов
             phone='',
             email='',
             permanent=''):      # Описание конструктора класса
-        self.setSurname(surname)                      
-        self.setName(name)                                 
-        self.setSecname(secname)  
+        self.setSurname(surname)
+        self.setName(name)
+        self.setSecname(secname)
         self.setAddress(address)
         self.setPhone(phone)
         self.setEmail(email)

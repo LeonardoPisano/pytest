@@ -1,11 +1,16 @@
 class sale:                #класс продаж
-    def __init__(self, product='', client='', datsale='', datdelivery='', number=''):      # Описание конструктора класса
+    def __init__(self,
+            product='',
+            client='',
+            datsale='',
+            datdelivery='',
+            number=''):      # Описание конструктора класса
         self.setProduct(product)
-        self.setClient(client)                                 
-        self.setDatsale(datsale)               
+        self.setClient(client)
+        self.setDatsale(datsale)
         self.setDatdelivery(datdelivery)
         self.setNumber(number)
-        
+
     def setProduct(self,value):                          #Устанавливает значение атрибутов
         '''
         Установить ID проданного продукта.
