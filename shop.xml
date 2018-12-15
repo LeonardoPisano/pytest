@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shop>
+	<clients>
+		<client
+			surname="Акакиевич"
+			name="Акакий"
+			secname="Акаиев"
+			address="г. Саратов, ул. Московская, д. 140"
+			phone="438980"
+			email="ivan@mail.ru"
+			permanent="0"/>
+		<client
+			surname="Игоревич"
+			name="Игорь"
+			secname="Чудов"
+			address="г. Энгельс, ул. Cтепная, д. 126"
+			phone="89372665134"
+			email="nir@sarfsc.ru"
+			permanent="1"/>
+		<client
+			surname="Анатольевна"
+			name="Анастасия"
+			secname="Береснева"
+			address="г. Нижний Тагил, пр. Вагоностроителей, д. 14"
+			phone="89649981880"
+			email="encorn@gmail.com"
+			permanent="1"/>
+	</clients>
+	<products>
+		<product
+			designation="Кружка"
+			price="140"
+			unit="шт"/>
+		<product
+			designation="Мультиварка"
+			price="2000"
+			unit="шт"/>
+		<product
+			designation="Пистолетик"
+			price="560"
+			unit="шт"/>
+	</products>
+	<sales>
+		<sale
+			product="Кружка"
+			client="Акакий"
+			datsale="12.10.2016"
+			datdelivery="12.11.2016"
+			number="4"/>
+		<sale
+			product="Мультиварка"
+			client="Анастасия"
+			datsale="16.11.2018"
+			datdelivery="19.11.2018"
+			number="1"/>
+		<sale
+			product="Пистолетик"
+			client="Игорь"
+			datsale="23.06.2017"
+			datdelivery="30.06.2017"
+			number="3"/>
+	</sales>
+</shop>
+
