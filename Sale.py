@@ -1,15 +1,10 @@
 class sale:                #класс продаж
-    def __init__(self,
-            product='',
-            client='',
-            datsale='',
-            datdelivery='',
-            number=''):      # Описание конструктора класса
-        self.setProduct(product)
-        self.setClient(client)
-        self.setDatsale(datsale)
-        self.setDatdelivery(datdelivery)
-        self.setNumber(number)
+    def __init__(self, propdict):
+        self.setProduct(propdict['product'])
+        self.setClient(propdict['client'])
+        self.setDatsale(propdict['datsale'])
+        self.setDatdelivery(propdict['datdelivery'])
+        self.setNumber(propdict['number'])
 
     def setProduct(self,value):                          #Устанавливает значение атрибутов
         '''
@@ -71,4 +66,14 @@ class sale:                #класс продаж
         Возвращаем количество заказанных продуктов.
         '''
         return self.__number
+
+    def as_dict(self):
+        '''
+        Вернуть все свойства продукта в виде словаря
+        '''
+        return { 'product': self.__product,
+            'client': self.__client,
+            'datsale': self.__datsale,
+            'datdelivery': self.__datdelivery,
+            'number': self.__number }
 

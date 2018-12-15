@@ -8,7 +8,8 @@
 			address="г. Саратов, ул. Московская, д. 140"
 			phone="438980"
 			email="ivan@mail.ru"
-			permanent="0"/>
+			permanent="0"
+			id="1"/>
 		<client
 			name="Игорь"
 			surname="Игоревич"
@@ -16,7 +17,8 @@
 			address="г. Энгельс, ул. Cтепная, д. 126"
 			phone="89372665134"
 			email="nir@sarfsc.ru"
-			permanent="1"/>
+			permanent="1"
+			id="2"/>
 		<client
 			name="Анастасия"
 			surname="Анатольевна"
@@ -24,38 +26,42 @@
 			address="г. Нижний Тагил, пр. Вагоностроителей, д. 14"
 			phone="89649981880"
 			email="encorn@gmail.com"
-			permanent="1"/>
+			permanent="1"
+			id="3"/>
 	</clients>
 	<products>
 		<product
 			designation="Кружка"
 			price="140"
-			unit="шт"/>
+			unit="шт"
+			id="1"/>
 		<product
 			designation="Мультиварка"
 			price="2000"
-			unit="шт"/>
+			unit="шт"
+			id="2"/>
 		<product
 			designation="Пистолетик"
 			price="560"
-			unit="шт"/>
+			unit="шт"
+			id="3"/>
 	</products>
 	<sales>
 		<sale
 			product="Кружка"
-			client="Акакий"
+			client="1"
 			datsale="12.10.2016"
 			datdelivery="12.11.2016"
 			number="4"/>
 		<sale
 			product="Мультиварка"
-			client="Анастасия"
+			client="3"
 			datsale="16.11.2018"
 			datdelivery="19.11.2018"
 			number="1"/>
 		<sale
 			product="Пистолетик"
-			client="Игорь"
+			client="2"
 			datsale="23.06.2017"
 			datdelivery="30.06.2017"
 			number="3"/>

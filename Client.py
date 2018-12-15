@@ -1,19 +1,13 @@
 class client:                #класс клиентов
-    def __init__(self,
-            surname='',
-            name='',
-            secname='',
-            address='',
-            phone='',
-            email='',
-            permanent=''):      # Описание конструктора класса
-        self.setSurname(surname)
-        self.setName(name)
-        self.setSecname(secname)
-        self.setAddress(address)
-        self.setPhone(phone)
-        self.setEmail(email)
-        self.setPermanent(permanent)
+    def __init__(self, propdict):
+        self.setName(propdict['name'])
+        self.setSurname(propdict['surname'])
+        self.setSecname(propdict['secname'])
+        self.setAddress(propdict['address'])
+        self.setPhone(propdict['phone'])
+        self.setEmail(propdict['email'])
+        self.setPermanent(propdict['permanent'])
+        self.setID(propdict['id'])
 
     def setSurname (self,value):                 #Устанавливает значение атрибутов
         '''
@@ -57,6 +51,12 @@ class client:                #класс клиентов
         '''
         self.__permanent=value
 
+    def setID(self, cid):
+        '''
+        Установить ID клиента
+        '''
+        self.__id = cid
+
     def getSurname (self):                  #Возвращает значение атрибутов
         '''
         Возвращаем значение фамилии.
@@ -98,4 +98,23 @@ class client:                #класс клиентов
         Возвращаем значение постоянного\не постояннного клиента.
         '''
         return self.__permanent
+
+    def getID(self):
+        '''
+        Вернуть ID клиента
+        '''
+        return self.__id
+
+    def as_dict(self):
+        '''
+        Вернуть все свойства объекта в виде словаря.
+        '''
+        return { 'name': self.__name,
+            'surname': self.__surname,
+            'secname': self.__secname,
+            'address': self.__address,
+            'phone': self.__phone,
+            'email': self.__email,
+            'permanent': self.__permanent,
+            'id': self.__id }
 
