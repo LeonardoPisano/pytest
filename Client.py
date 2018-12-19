@@ -1,4 +1,7 @@
+import re
+
 class client:                #класс клиентов
+    __re_email = re.compile(r'[^@]+@[^@]+\.[^@]+')
     def __init__(self, propdict):
         self.setName(propdict['name'])
         self.setSurname(propdict['surname'])
@@ -9,7 +12,7 @@ class client:                #класс клиентов
         self.setPermanent(propdict['permanent'])
         self.setID(propdict['id'])
 
-    def setSurname (self,value):                 #Устанавливает значение атрибутов
+    def setSurname (self,value):                 #Устанавливает значение атрибутов (экземпляры)
         '''
         Устанавливаем фамилию клиента.
         '''
@@ -39,11 +42,14 @@ class client:                #класс клиентов
         '''
         self.__phone=value
 
-    def setEmail (self, value):
+    def setEmail (self, value):             #описать структуру email регулярных выражений 
         '''
         Устанавливаем Email клиента.
         '''
-        self.__email=value
+        if self.__re_email.match(value):
+            self.__email=value
+        else:
+            raise Exception('invalid email {}'.format(value))
 
     def setPermanent (self, value):
         '''
@@ -61,7 +67,7 @@ class client:                #класс клиентов
         '''
         Возвращаем значение фамилии.
         '''
-        return self.__surname  
+        return self.__surname
 
     def getName (self):
         '''

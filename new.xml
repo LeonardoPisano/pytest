@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <shop>
 	<clients>
-		<client address="г. Саратов, ул. Московская, д. 140" email="ivan@mail.ru" id="1" name="Акакий" permanent="0" phone="438980" secname="Акаиев" surname="Акакиевич"/>
-		<client address="г. Энгельс, ул. Cтепная, д. 126" email="nir@sarfsc.ru" id="2" name="Игорь" permanent="1" phone="89372665134" secname="Чудов" surname="Игоревич"/>
-		<client address="г. Нижний Тагил, пр. Вагоностроителей, д. 14" email="encorn@gmail.com" id="3" name="Анастасия" permanent="1" phone="89649981880" secname="Береснева" surname="Анатольевна"/>
+		<client address="г. Саратов, ул. Навашина, д. 40/1" email="olololo@mail.ru" id="1" name="Ольга" permanent="0" phone="89658874009" secname="Игоревна" surname="Вековшинина"/>
+		<client address="г. Энгельс, ул. Cтепная, д. 126" email="nir@sarfsc.ru" id="2" name="Игорь" permanent="1" phone="89372665134" secname="Игоревичь" surname="Чудов"/>
+		<client address="г. Нижний Тагил, пр. Вагоностроителей, д. 14" email="encorn@gmail.com" id="3" name="Анастасия" permanent="1" phone="89649981880" secname="Анатольевна" surname="Береснева"/>
 	</clients>
 	<products>
 		<product designation="Кружка" id="1" price="140" unit="шт"/>

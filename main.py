@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.6
+#!/usr/bin/python3.6
 import xml.dom.minidom as md   #Стандартная поставка в python
 import argparse
 import sys
@@ -35,26 +35,25 @@ class runner:
     __products = dict()
     __sales = dict()
 
-    def __init__(self):
-        pass
 
     def run_from_xml(self, source, rootnode):
         shop_xml = Parser.parser(source, rootnode)
 
         # Получаем список словарей-клиентов.
         # Каждый клиент это набор свойств одного клиента.
-        clients = shop_xml.get_entries(self.__client_attributes,
+        clients = shop_xml.get_entries(self.__client_attributes,        #список словарей. 
             'clients',
             'client')
         # Конструируем объекты клиентов из словарей и мапим айдишники
         # клиентов в объекты клиентов. Это понадобится, чтобы связать
         # айдишники клиентов с продажами.
         for client in clients:
-            client_obj = Client.client(client)
-            self.__clients[client_obj.getID()] = client_obj
+            client_obj = Client.client(client)          #конкретные атрибуты определенного клиента
+            self.__clients[client_obj.getID()] = client_obj         #соотносим конкретному клиенту ID
+
         # Печатаем на stdout то, что наконструировали.
-        for client_key, client_value in self.__clients.items():
-            print('Зарегистрированные клиенты: {}, {}, {}'.format(client_value.getSurname(),
+        for client_key, client_value in self.__clients.items():         #обходим список клиентов (перебор) 
+            print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
                 client_value.getName(),
                 client_value.getSecname()))
 
@@ -71,7 +70,7 @@ class runner:
 
         # Печатаем на stdout то, что нашли.
         for product_key, product_value in self.__products.items():
-            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
+            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),     #
                 product_value.getPrice(),
                 product_value.getUnit()))
 
@@ -82,14 +81,19 @@ class runner:
         # Конструируем объекты продаж, мапим их номера в объекты,
         # заодно подтягиваем айдишники клиентов.
         for sale in sales:
-            sale_obj = Sale.sale(sale)
-            self.__sales[sale_obj.getNumber()] = sale_obj
+            if sale['product'] in self.__products.keys() and sale['client'] in self.__clients.keys():
+                sale_obj = Sale.sale(sale)
+                self.__sales[sale_obj.getNumber()] = sale_obj
+                print (Sale.sale(sale))
+            else:
+                print ('sorry')
         for sale_key, sale_value in self.__sales.items():
             print('Продажа: {} от {}, доставка {} клиенту {}, ID: {}'.format(sale_value.getProduct(),
                 sale_value.getDatsale(),
                 sale_value.getDatdelivery(),
                 self.__clients[sale_value.getClient()].getName(),
                 sale_value.getNumber()))
+
 
     def run_from_sqlite(self, dbfile='shop.sqlite3'):
         '''
@@ -101,7 +105,7 @@ class runner:
         '''
         Сохранить структуры данных в XML файл.
         '''
-        dump = Parser.writer('new.xml', 'shop')
+        dump = Parser.writer( xmlfile, 'shop')
         dump.add_group('clients')
         dump.add_group('products')
         dump.add_group('sales')
@@ -151,6 +155,7 @@ def main(argv):
         application.save_to_xml(args.toxml)
     if args.tosqlite:
         application.save_to_sqlite(args.tosqlite)
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])

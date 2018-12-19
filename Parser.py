@@ -1,13 +1,13 @@
 import xml.dom.minidom as md   #Стандартная поставка в python
 
-import Client
+import Client           #импортируем модули
 import Product
 import Sale
 
 class writer:
     __xmldoc = md.Document()
-    __dumpname = ''
-    __rootname = ''
+    __dumpname = ''     #имя файла shop.xml в который сохранять данные
+    __rootname = ''     #имя корнегого элемента <shop> </shop>
     __rootnode = ''
 
     def __init__(self, dumpname, rootnode):
@@ -17,9 +17,9 @@ class writer:
         '''
         self.__dumpname = dumpname
         self.__rootname = rootnode
-        root = self.__xmldoc.createElement(self.__rootname)
-        self.__xmldoc.appendChild(root)
-        self.__rootnode = self.__xmldoc.getElementsByTagName(self.__rootname)[0]
+        root = self.__xmldoc.createElement(self.__rootname)                                 #создать элемент
+        self.__xmldoc.appendChild(root)                                                     #возвращаем ссылку и дабавляет элемент
+        self.__rootnode = self.__xmldoc.getElementsByTagName(self.__rootname)[0]            #собираем нужные части из XML
 
     def add_group(self, groupname):
         '''
@@ -52,11 +52,14 @@ class writer:
 
 
 class parser:
+
+    __filename = ''     #имя файла
+    __rootnode = ''
     def __init__(self, docname, rootnode):
         print('Разбираем файл XML: {}'.format(docname))
         # Читаем XML файл с начальными данными в DOM дерево
         domtree = md.parse(docname) #parse - разбираем файл
-        domtree.normalize()
+        domtree.normalize() 
 
         # Берём корневой элемент документа
         self.__filename = docname
@@ -74,12 +77,12 @@ class parser:
         Выбрать все атрибуты из одного элемента XML и вернуть их в
         виде словаря.
         '''
-        element = dict()
+        element = dict()        #
         for attr in attributes:
-            if entry.hasAttribute(attr):
-                element[attr] = entry.getAttribute(attr)
+            if entry.hasAttribute(attr):                        #если такой элемент существует, то
+                element[attr] = entry.getAttribute(attr)        #создать ключ этого элемента для словаря
             else:
-                print('No attribute named {} found in entry.'.format(attr))
+                raise  Exception('No attribute named {} found in entry.'.format(attr))
 
         return element
 
@@ -91,8 +94,10 @@ class parser:
         print('Создаём список элементов {} из группы {}'.format(elemname, groupname))
         entries = self.parse_group_for(groupname, elemname)
         entry_list = []
-        for entry in entries:
-            entry_list.append(self.get_attributes(entry, attrlist))
-
-        return entry_list
+        for entry in entries:           #обходим список элементов, собираем их атрибуты
+            try:
+                entry_list.append(self.get_attributes(entry, attrlist))
+            except Exception as error:
+                print ('Caught exception while geting attributes: {}'.format(repr (error)))
+        return entry_list #возвращаем список словарей
 

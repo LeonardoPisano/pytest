@@ -2,27 +2,27 @@
 <shop>
 	<clients>
 		<client
-			name="Акакий"
-			surname="Акакиевич"
-			secname="Акаиев"
-			address="г. Саратов, ул. Московская, д. 140"
-			phone="438980"
-			email="ivan@mail.ru"
+			surname="Вековшинина"
+			name="Ольга"
+			secname="Игоревна"
+			address="г. Саратов, ул. Навашина, д. 40/1"
+			phone="89658874009"
+			email="lolololo@mail.ru"
 			permanent="0"
 			id="1"/>
 		<client
+			surname="Чудов"
 			name="Игорь"
-			surname="Игоревич"
-			secname="Чудов"
+			secname="Игоревич"
 			address="г. Энгельс, ул. Cтепная, д. 126"
 			phone="89372665134"
 			email="nir@sarfsc.ru"
 			permanent="1"
 			id="2"/>
 		<client
+			surname="Береснева"
 			name="Анастасия"
-			surname="Анатольевна"
-			secname="Береснева"
+			secname="Анатольевна"
 			address="г. Нижний Тагил, пр. Вагоностроителей, д. 14"
 			phone="89649981880"
 			email="encorn@gmail.com"
@@ -36,9 +36,9 @@
 			unit="шт"
 			id="1"/>
 		<product
-			designation="Мультиварка"
-			price="2000"
-			unit="шт"
+			designation="Вино"
+			price="5000"
+			unit="литр"
 			id="2"/>
 		<product
 			designation="Пистолетик"
@@ -48,19 +48,19 @@
 	</products>
 	<sales>
 		<sale
-			product="Кружка"
+			product="1"
 			client="1"
 			datsale="12.10.2016"
 			datdelivery="12.11.2016"
 			number="4"/>
 		<sale
-			product="Мультиварка"
+			product="2"
 			client="3"
 			datsale="16.11.2018"
 			datdelivery="19.11.2018"
-			number="1"/>
+			number="5"/>
 		<sale
-			product="Пистолетик"
+			product="3"
 			client="2"
 			datsale="23.06.2017"
 			datdelivery="30.06.2017"

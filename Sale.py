@@ -6,6 +6,13 @@ class sale:                #класс продаж
         self.setDatdelivery(propdict['datdelivery'])
         self.setNumber(propdict['number'])
 
+    def __str__(self):
+        return 'product {} client {} datsale {} datdelivery {} number {}'.format(self.getProduct(),         #сериализация
+                                                                                 self.getClient(),
+                                                                                 self.getDatsale(),
+                                                                                 self.getDatdelivery(),
+                                                                                 self.getNumber())
+
     def setProduct(self,value):                          #Устанавливает значение атрибутов
         '''
         Установить ID проданного продукта.
