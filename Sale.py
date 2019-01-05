@@ -1,21 +1,21 @@
 class sale:                #класс продаж
-    def __init__(self, propdict):
-        self.setProduct(propdict['product'])
-        self.setClient(propdict['client'])
+    def __init__(self, propdict, productdict, clientdict):
+        self.setProduct(productdict[propdict['product']])
+        self.setClient(clientdict[propdict['client']])
         self.setDatsale(propdict['datsale'])
         self.setDatdelivery(propdict['datdelivery'])
         self.setNumber(propdict['number'])
 
     def __str__(self):
-        return 'product {} client {} datsale {} datdelivery {} number {}'.format(self.getProduct(),         #сериализация
-                                                                                 self.getClient(),
+        return 'product {} client {} datsale {} datdelivery {} number {}'.format(self.getProduct().getDesignation(),         #сериализация
+                                                                                 self.getClient().getName(),
                                                                                  self.getDatsale(),
                                                                                  self.getDatdelivery(),
                                                                                  self.getNumber())
 
-    def setProduct(self,value):                          #Устанавливает значение атрибутов
+    def setProduct(self,value):                        #Устанавливает значение атрибутов
         '''
-        Установить ID проданного продукта.
+        Установить ссылку на объек типа product с идентификатором ID
         '''
         self.__product=value
 
@@ -23,7 +23,7 @@ class sale:                #класс продаж
         '''
         Установить ID покупателя.
         '''
-        self.__client=value 
+        self.__client=value
 
     def setDatsale(self,value):
         '''

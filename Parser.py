@@ -8,7 +8,7 @@ class writer:
     __xmldoc = md.Document()
     __dumpname = ''     #имя файла shop.xml в который сохранять данные
     __rootname = ''     #имя корнегого элемента <shop> </shop>
-    __rootnode = ''
+    __rootnode = ''     #корневая нода
 
     def __init__(self, dumpname, rootnode):
         '''
@@ -56,7 +56,7 @@ class parser:
     __filename = ''     #имя файла
     __rootnode = ''
     def __init__(self, docname, rootnode):
-        print('Разбираем файл XML: {}'.format(docname))
+        #print('Разбираем файл XML: {}'.format(docname))
         # Читаем XML файл с начальными данными в DOM дерево
         domtree = md.parse(docname) #parse - разбираем файл
         domtree.normalize() 
@@ -69,7 +69,8 @@ class parser:
         '''
         Выбрать элементы elemname из группы groupname
         '''
-        print('Выбираем элементы {} из группы {}'.format(elemname, groupname))
+        #print('Выбираем элементы {} из группы {}\n'.format(elemname, groupname))
+        print('\n')
         return self.__rootnode.getElementsByTagName(groupname)[0].getElementsByTagName(elemname)
 
     def get_attributes(self, entry, attributes):
@@ -77,7 +78,7 @@ class parser:
         Выбрать все атрибуты из одного элемента XML и вернуть их в
         виде словаря.
         '''
-        element = dict()        #
+        element = dict()
         for attr in attributes:
             if entry.hasAttribute(attr):                        #если такой элемент существует, то
                 element[attr] = entry.getAttribute(attr)        #создать ключ этого элемента для словаря
@@ -91,7 +92,7 @@ class parser:
         Выбрать все элементы атрибуты attrlist из элементов elemname
         из группы groupname и вернуть в виде списка словарей.
         '''
-        print('Создаём список элементов {} из группы {}'.format(elemname, groupname))
+        #print('\nСоздаём список элементов {} из группы {}'.format(elemname, groupname))
         entries = self.parse_group_for(groupname, elemname)
         entry_list = []
         for entry in entries:           #обходим список элементов, собираем их атрибуты

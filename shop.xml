@@ -8,7 +8,7 @@
 			address="г. Саратов, ул. Навашина, д. 40/1"
 			phone="89658874009"
 			email="lolololo@mail.ru"
-			permanent="0"
+			permanent="1"
 			id="1"/>
 		<client
 			surname="Чудов"
@@ -17,7 +17,7 @@
 			address="г. Энгельс, ул. Cтепная, д. 126"
 			phone="89372665134"
 			email="nir@sarfsc.ru"
-			permanent="1"
+			permanent="0"
 			id="2"/>
 		<client
 			surname="Береснева"
@@ -50,21 +50,21 @@
 		<sale
 			product="1"
 			client="1"
-			datsale="12.10.2016"
+			datsale="12.11.2015"
 			datdelivery="12.11.2016"
-			number="4"/>
+			number="5"/>
 		<sale
 			product="2"
-			client="3"
+			client="2"
 			datsale="16.11.2018"
 			datdelivery="19.11.2018"
-			number="5"/>
+			number="9"/>
 		<sale
 			product="3"
 			client="2"
 			datsale="23.06.2017"
 			datdelivery="30.06.2017"
-			number="3"/>
+			number="7"/>
 	</sales>
 </shop>
 

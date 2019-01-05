@@ -1,16 +1,15 @@
 #!/usr/bin/python3.6
 import xml.dom.minidom as md   #Стандартная поставка в python
-import argparse
-import sys
+import argparse     #модуль для обработки аргументов командной строки
+import sys          #предоставляет системе особые параметры и функции
 
 import Client
 import Product
 import Sale
 
-# Модуль чтения и записи XML.
-import Parser
-# Модуль чтения и записи БД SQLite3
-import Database
+import Parser          # Модуль чтения и записи XML.
+
+import Database        # Модуль чтения и записи БД SQLite3
 
 class runner:
     __client_attributes = ('name',
@@ -41,21 +40,24 @@ class runner:
 
         # Получаем список словарей-клиентов.
         # Каждый клиент это набор свойств одного клиента.
-        clients = shop_xml.get_entries(self.__client_attributes,        #список словарей. 
+        clients = shop_xml.get_entries(self.__client_attributes,        #список словарей.
             'clients',
             'client')
         # Конструируем объекты клиентов из словарей и мапим айдишники
         # клиентов в объекты клиентов. Это понадобится, чтобы связать
         # айдишники клиентов с продажами.
         for client in clients:
-            client_obj = Client.client(client)          #конкретные атрибуты определенного клиента
+            client_obj = Client.client(client)                      #обходим конкретные атрибуты определенного клиента
             self.__clients[client_obj.getID()] = client_obj         #соотносим конкретному клиенту ID
 
-        # Печатаем на stdout то, что наконструировали.
-        for client_key, client_value in self.__clients.items():         #обходим список клиентов (перебор) 
+        # Печатаем на stdout(Стандартные потоки ввода-вывода) то, что наконструировали.
+        for client_key, client_value in self.__clients.items():  #обходим список клиентов (перебор) 
             print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
                 client_value.getName(),
                 client_value.getSecname()))
+
+        #from pprint import pprint
+        #pprint(clients)
 
         # Здесь мы получаем список словарей-продуктов
         # Каждый словарь это набор свойств одного продукта.
@@ -70,7 +72,7 @@ class runner:
 
         # Печатаем на stdout то, что нашли.
         for product_key, product_value in self.__products.items():
-            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),     #
+            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
                 product_value.getPrice(),
                 product_value.getUnit()))
 
@@ -78,22 +80,23 @@ class runner:
         sales = shop_xml.get_entries(self.__sales_attributes,
             'sales',
             'sale')
-        # Конструируем объекты продаж, мапим их номера в объекты,
-        # заодно подтягиваем айдишники клиентов.
+
+        #Конструируем объекты продаж, мапим их номера в объекты,
+        #заодно подтягиваем айдишники клиентов.
         for sale in sales:
             if sale['product'] in self.__products.keys() and sale['client'] in self.__clients.keys():
-                sale_obj = Sale.sale(sale)
+                sale_obj = Sale.sale(sale, self.__products, self.__clients)
                 self.__sales[sale_obj.getNumber()] = sale_obj
-                print (Sale.sale(sale))
+                print (sale_obj)
             else:
                 print ('sorry')
         for sale_key, sale_value in self.__sales.items():
-            print('Продажа: {} от {}, доставка {} клиенту {}, ID: {}'.format(sale_value.getProduct(),
-                sale_value.getDatsale(),
-                sale_value.getDatdelivery(),
-                self.__clients[sale_value.getClient()].getName(),
-                sale_value.getNumber()))
-
+            print('Продажа: {} от {}, доставка {} клиенту {}, в колличесстве: {}'.format
+                (sale_value.getProduct().getDesignation(),
+                 sale_value.getDatsale(),
+                 sale_value.getDatdelivery(),
+                 sale_value.getClient().getName(),
+                 sale_value.getNumber()))
 
     def run_from_sqlite(self, dbfile='shop.sqlite3'):
         '''
@@ -130,8 +133,8 @@ def main(argv):
     - в файл или в БД писать данные
     '''
     parser = argparse.ArgumentParser(description='Магазин')
-    from_group = parser.add_mutually_exclusive_group()
-    to_group = parser.add_mutually_exclusive_group()
+    from_group = parser.add_mutually_exclusive_group()          #Создаем две взаимоисключающие группы
+    to_group = parser.add_mutually_exclusive_group()            #куда записать и где прочитать
     from_group.add_argument('-x', '--xml',
         type=str,
         default='shop.xml',
@@ -145,7 +148,7 @@ def main(argv):
     to_group.add_argument('-d', '--tosqlite',
         type=str,
         help='Сохранить данные в базу данных SQLite3')
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
     application = runner()
     if args.xml:
         application.run_from_xml(args.xml, 'shop')
@@ -158,5 +161,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
-
+    main(sys)     #список аргументов командной строки
