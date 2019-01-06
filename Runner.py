@@ -1,7 +1,9 @@
+#!/usr/bin/python3.6
 import Client
 import Product
 import Sale
- 
+import Repl
+
 import Parser          # Модуль чтения и записи XML.
 
 import Database        # Модуль чтения и записи БД SQLite3
@@ -19,7 +21,7 @@ class runner:
         'price',
         'unit',
         'id')
-    __sales_attributes = ('product',
+    __sale_attributes = ('product',
         'client',
         'datsale',
         'datdelivery',
@@ -46,10 +48,10 @@ class runner:
             self.__clients[client_obj.getID()] = client_obj         #соотносим конкретному клиенту ID
 
         # Печатаем на stdout(Стандартные потоки ввода-вывода) то, что наконструировали.
-        for client_key, client_value in self.__clients.items():  #обходим список клиентов (перебор) 
-            print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
-                client_value.getName(),
-                client_value.getSecname()))
+        #for client_key, client_value in self.__clients.items():  #обходим список клиентов (перебор) 
+         #   print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
+          #      client_value.getName(),
+           #     client_value.getSecname()))
 
         #from pprint import pprint
         #pprint(clients)
@@ -66,13 +68,13 @@ class runner:
             self.__products[product_obj.getID()] = product_obj
 
         # Печатаем на stdout то, что нашли.
-        for product_key, product_value in self.__products.items():
-            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
-                product_value.getPrice(),
-                product_value.getUnit()))
+        #for product_key, product_value in self.__products.items():
+         #   print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
+          #      product_value.getPrice(),
+           #     product_value.getUnit()))
 
         # Наконец, собираем список словарей продаж.
-        sales = shop_xml.get_entries(self.__sales_attributes,
+        sales = shop_xml.get_entries(self.__sale_attributes,
             'sales',
             'sale')
 
@@ -85,13 +87,13 @@ class runner:
                 print (sale_obj)
             else:
                 print ('sorry')
-        for sale_key, sale_value in self.__sales.items():
-            print('Продажа: {} от {}, доставка {} клиенту {}, в колличесстве: {}'.format
-                (sale_value.getProduct().getDesignation(),
-                 sale_value.getDatsale(),
-                 sale_value.getDatdelivery(),
-                 sale_value.getClient().getName(),
-                 sale_value.getNumber()))
+        #for sale_key, sale_value in self.__sales.items():
+         #   print('Продажа: {} от {}, доставка {} клиенту {}, в колличесстве: {}'.format
+          #      (sale_value.getProduct().getDesignation(),
+           #      sale_value.getDatsale(),
+            #     sale_value.getDatdelivery(),
+             #    sale_value.getClient().getName(),
+              #   sale_value.getNumber()))
 
     def run_from_sqlite(self, dbfile='shop.sqlite3'):
         '''
@@ -120,3 +122,22 @@ class runner:
         Сохранить результаты работы в базу данных SQLite3.
         '''
         print('Save to sqlite')
+
+
+    def rep(self):
+        '''
+        Редактировать в консоли
+        '''
+        rep = Repl.repl(self.__clients,
+            self.__products,
+            self.__sales,
+            self.__client_attributes,
+            self.__product_attributes,
+            self.__sale_attributes)
+
+        #print(rep.sale_info(' ')) #Для n-ой продажи
+        rep.reader()
+        #print()
+        #print(application.sale_info())
+        #print()
+

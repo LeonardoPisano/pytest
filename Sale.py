@@ -5,14 +5,15 @@ class sale:                #класс продаж
         self.setDatsale(propdict['datsale'])
         self.setDatdelivery(propdict['datdelivery'])
         self.setNumber(propdict['number'])
+        #self.setID(propdict['id'])
 
     def __str__(self):
-        return 'product {} client {} datsale {} datdelivery {} number {}'.format(self.getProduct().getDesignation(),         #сериализация
-                                                                                 self.getClient().getName(),
-                                                                                 self.getDatsale(),
-                                                                                 self.getDatdelivery(),
-                                                                                 self.getNumber())
-
+        return 'product {} client {} datsale {} datdelivery {} number {} '.format(self.getProduct().getDesignation(),    #сериализация
+                              self.getClient().getName(),
+                              self.getDatsale(),
+                              self.getDatdelivery(),
+                              self.getNumber())
+                             # self.getID())
     def setProduct(self,value):                        #Устанавливает значение атрибутов
         '''
         Установить ссылку на объек типа product с идентификатором ID
@@ -43,6 +44,8 @@ class sale:                #класс продаж
         '''
         self.__number=value
 
+    #def setID(self, sid):
+     #   self.__id=sid
 
     def getProduct(self):                                #Возвращает значение атрибутов
         '''
@@ -73,6 +76,9 @@ class sale:                #класс продаж
         Возвращаем количество заказанных продуктов.
         '''
         return self.__number
+
+    #def getID(self):
+     #   return self.__id
 
     def as_dict(self):
         '''

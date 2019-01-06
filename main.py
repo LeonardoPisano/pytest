@@ -33,6 +33,9 @@ def main(argv):
         application.run_from_xml(args.xml, 'shop')
     if args.sqlite:
         application.run_from_sqlite(args.sqlite)
+
+        application.rep()
+
     if args.toxml:
         application.save_to_xml(args.toxml)
     if args.tosqlite:

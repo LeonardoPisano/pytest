@@ -70,7 +70,7 @@ class parser:
         Выбрать элементы elemname из группы groupname
         '''
         #print('Выбираем элементы {} из группы {}\n'.format(elemname, groupname))
-        print('\n')
+        #print('\n')
         return self.__rootnode.getElementsByTagName(groupname)[0].getElementsByTagName(elemname)
 
     def get_attributes(self, entry, attributes):
