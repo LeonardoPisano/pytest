@@ -10,7 +10,11 @@ class client:                #класс клиентов
         self.setPhone(propdict['phone'])
         self.setEmail(propdict['email'])
         self.setPermanent(propdict['permanent'])
-        self.setID(propdict['id'])
+
+    def __str__(self):
+        return '\"{} {} {}\"'.format(self.__name,
+            self.__surname,
+            self.__secname)
 
     def setSurname (self,value):                 #Устанавливает значение атрибутов (экземпляры)
         '''
@@ -57,12 +61,6 @@ class client:                #класс клиентов
         '''
         self.__permanent=value
 
-    def setID(self, cid):
-        '''
-        Установить ID клиента
-        '''
-        self.__id = cid
-
     def getSurname (self):                  #Возвращает значение атрибутов
         '''
         Возвращаем значение фамилии.
@@ -105,12 +103,6 @@ class client:                #класс клиентов
         '''
         return self.__permanent
 
-    def getID(self):
-        '''
-        Вернуть ID клиента
-        '''
-        return self.__id
-
     def as_dict(self):
         '''
         Вернуть все свойства объекта в виде словаря.
@@ -121,6 +113,5 @@ class client:                #класс клиентов
             'address': self.__address,
             'phone': self.__phone,
             'email': self.__email,
-            'permanent': self.__permanent,
-            'id': self.__id }
+            'permanent': self.__permanent }
 
