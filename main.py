@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/env python3.6
 import xml.dom.minidom as md   #Стандартная поставка в python
 import argparse     #модуль для обработки аргументов командной строки
 import sys          #предоставляет системе особые параметры и функции
