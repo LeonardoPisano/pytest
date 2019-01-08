@@ -1,8 +1,9 @@
-#!/usr/bin/python3.6
+from collections import OrderedDict
+
 import Client
 import Product
 import Sale
-import Repl
+import Repl            # Читалка команд с терминала
 
 import Parser          # Модуль чтения и записи XML.
 
@@ -26,6 +27,7 @@ class runner:
         'datsale',
         'datdelivery',
         'number')
+    __skip_attributes = ('id', 'number')
     __source_path = ''
     __clients = dict()
     __products = dict()
@@ -45,16 +47,10 @@ class runner:
         # айдишники клиентов с продажами.
         for client in clients:
             client_obj = Client.client(client)                      #обходим конкретные атрибуты определенного клиента
-            self.__clients[client_obj.getID()] = client_obj         #соотносим конкретному клиенту ID
+            self.__clients[client['id']] = client_obj         #соотносим конкретному клиенту ID
 
-        # Печатаем на stdout(Стандартные потоки ввода-вывода) то, что наконструировали.
-        #for client_key, client_value in self.__clients.items():  #обходим список клиентов (перебор) 
-         #   print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
-          #      client_value.getName(),
-           #     client_value.getSecname()))
-
-        #from pprint import pprint
-        #pprint(clients)
+        # Преобразуем dict клиентов в OrderedDict
+        self.__clients = OrderedDict(sorted(self.__clients.items()))
 
         # Здесь мы получаем список словарей-продуктов
         # Каждый словарь это набор свойств одного продукта.
@@ -65,13 +61,10 @@ class runner:
         # для связи продаж с продуктами.
         for product in products:
             product_obj = Product.product(product)
-            self.__products[product_obj.getID()] = product_obj
+            self.__products[product['id']] = product_obj
 
-        # Печатаем на stdout то, что нашли.
-        #for product_key, product_value in self.__products.items():
-         #   print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
-          #      product_value.getPrice(),
-           #     product_value.getUnit()))
+        # Преобразуем dict продуктов в defaultdict
+        self.__products = OrderedDict(sorted(self.__products.items()))
 
         # Наконец, собираем список словарей продаж.
         sales = shop_xml.get_entries(self.__sale_attributes,
@@ -81,19 +74,15 @@ class runner:
         #Конструируем объекты продаж, мапим их номера в объекты,
         #заодно подтягиваем айдишники клиентов.
         for sale in sales:
-            if sale['product'] in self.__products.keys() and sale['client'] in self.__clients.keys():
+            try:
                 sale_obj = Sale.sale(sale, self.__products, self.__clients)
-                self.__sales[sale_obj.getNumber()] = sale_obj
-                print (sale_obj)
-            else:
-                print ('sorry')
-        #for sale_key, sale_value in self.__sales.items():
-         #   print('Продажа: {} от {}, доставка {} клиенту {}, в колличесстве: {}'.format
-          #      (sale_value.getProduct().getDesignation(),
-           #      sale_value.getDatsale(),
-            #     sale_value.getDatdelivery(),
-             #    sale_value.getClient().getName(),
-              #   sale_value.getNumber()))
+                self.__sales[sale['number']] = sale_obj
+            except:
+                if not sale['product'] in self.__products.keys():
+                    print('Missing product reference: {}'.format(sale['product']))
+                if not sale['client'] in self.__clients.keys():
+                    print('Missing client reference: {}'.format(sale['client']))
+        self.__sales = OrderedDict(sorted(self.__sales.items()))
 
     def run_from_sqlite(self, dbfile='shop.sqlite3'):
         '''
@@ -133,11 +122,8 @@ class runner:
             self.__sales,
             self.__client_attributes,
             self.__product_attributes,
-            self.__sale_attributes)
+            self.__sale_attributes,
+            self.__skip_attributes)
 
-        #print(rep.sale_info(' ')) #Для n-ой продажи
         rep.reader()
-        #print()
-        #print(application.sale_info())
-        #print()
 
