@@ -1,19 +1,14 @@
 class sale:                #класс продаж
     def __init__(self, propdict, productdict, clientdict):
-        self.setProduct(productdict[propdict['product']])
-        self.setClient(clientdict[propdict['client']])
-        self.setDatsale(propdict['datsale'])
-        self.setDatdelivery(propdict['datdelivery'])
-        self.setNumber(propdict['number'])
-        #self.setID(propdict['id'])
+        self.__product = productdict[propdict['product']]
+        self.__client = clientdict[propdict['client']]
+        self.__datsale = propdict['datsale']
+        self.__datdelivery = propdict['datdelivery']
 
     def __str__(self):
-        return 'product {} client {} datsale {} datdelivery {} number {} '.format(self.getProduct().getDesignation(),    #сериализация
-                              self.getClient().getName(),
-                              self.getDatsale(),
-                              self.getDatdelivery(),
-                              self.getNumber())
-                             # self.getID())
+        return '\"{}\" \"{}\"'.format(self.__product,
+            self.__client)
+
     def setProduct(self,value):                        #Устанавливает значение атрибутов
         '''
         Установить ссылку на объек типа product с идентификатором ID
@@ -37,15 +32,6 @@ class sale:                #класс продаж
         Установить дату доставки.
         '''
         self.__datdelivery=value
-
-    def setNumber(self,value):
-        '''
-        Установить количество покупаемого продукта.
-        '''
-        self.__number=value
-
-    #def setID(self, sid):
-     #   self.__id=sid
 
     def getProduct(self):                                #Возвращает значение атрибутов
         '''
@@ -71,15 +57,6 @@ class sale:                #класс продаж
         '''
         return self.__datdelivery
 
-    def getNumber(self):
-        '''
-        Возвращаем количество заказанных продуктов.
-        '''
-        return self.__number
-
-    #def getID(self):
-     #   return self.__id
-
     def as_dict(self):
         '''
         Вернуть все свойства продукта в виде словаря
@@ -87,6 +64,5 @@ class sale:                #класс продаж
         return { 'product': self.__product,
             'client': self.__client,
             'datsale': self.__datsale,
-            'datdelivery': self.__datdelivery,
-            'number': self.__number }
+            'datdelivery': self.__datdelivery }
 
