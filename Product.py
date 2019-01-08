@@ -1,9 +1,13 @@
 class product:                #класс товаров
     def __init__(self, propdict):
-        self.setDesignation(propdict['designation'])
-        self.setPrice(propdict['price'])
-        self.setUnit(propdict['unit'])
-        self.setID(propdict['id'])
+        self.__designation = propdict['designation']
+        self.__price = propdict['price']
+        self.__unit = propdict['unit']
+
+    def __str__(self):
+        return '\"{}\" {} {} руб.'.format(self.__designation,
+            self.__unit,
+            self.__price)
 
     def setDesignation(self,value):         #Устанавливает значение атрибутов
         '''
@@ -23,12 +27,6 @@ class product:                #класс товаров
         '''
         self.__unit=value
 
-    def setID(self, pid):
-        '''
-        Устанавливаем ID продукта
-        '''
-        self.__pid = pid
-
     def getDesignation(self):                  #Возвращает значение атрибутов
         '''
         Возвращаем название продукта.
@@ -47,17 +45,11 @@ class product:                #класс товаров
         '''
         return self.__unit
 
-    def getID(self):
-        '''
-        Возвращаем ID продукта
-        '''
-        return self.__pid
-
     def as_dict(self):
         '''
         Вернуть все свойства объекта в виде словаря.
         '''
         return { 'designation': self.__designation,
             'price': self.__price,
-            'unit': self.__unit,
-            'id': self.__pid }
+            'unit': self.__unit }
+
