@@ -9,6 +9,9 @@ class repl:
     __client_attributes = []
     __product_attributes = []
     __sale_attributes = []
+    # Имена атрибутов, которые не надо спрашивать и будут добавлены
+    # автоматически.
+    __skip_attributes = []
 
     __clients = dict()
     __products = dict()
@@ -22,77 +25,104 @@ class repl:
         sales,
         client_attributes,
         product_attributes,
-        sale_attributes):
+        sale_attributes,
+        skip_attributes):
         self.__clients = clients
         self.__products = products
         self.__sales = sales
         self.__client_attributes = client_attributes
         self.__product_attributes = product_attributes
         self.__sale_attributes = sale_attributes
+        self.__skip_attributes = skip_attributes
+
+    def __print_elements(self, header, dict_val):
+        print(header)
+        for key, val in dict_val.items():
+            print('{} {}'.format(key, val))
 
     def print(self):
-    #'''
-    #from pprint import pprint
-    #pprint(actors) 
-    #Печать содержимого словарей, объектов, как оно видится в коде
-    #'''
-    # Печатаем на stdout(Стандартные потоки ввода-вывода) то, что наконструировали.
-        for client_key, client_value in self.__clients.items():  #обходим список клиентов (перебор) 
-            print('Зарегистрированные клиенты: {} {} {}'.format(client_value.getSurname(),
-                client_value.getName(),
-                client_value.getSecname()))
-
-        # Печатаем на stdout то, что нашли.
-        for product_key, product_value in self.__products.items():
-            print('Продукт в наличии: {}, {} руб., ед. изм.: {}'.format(product_value.getDesignation(),
-                product_value.getPrice(),
-                product_value.getUnit()))
-
-        for sale_key, sale_value in self.__sales.items():
-            print('Продажа: {} от {}, доставка {} клиенту {}, в колличесстве: {}'.format
-                (sale_value.getProduct().getDesignation(),
-                 sale_value.getDatsale(),
-                 sale_value.getDatdelivery(),
-                 sale_value.getClient().getName(),
-                 sale_value.getNumber()))
-
-    def sale_info(self, id):
-            return 'Продажа продукта {}  Клиенту: {} ,{} \n'.format(id, self.__sales[id].getClient().getName(),
-            self.__sales[id].getPproduct().getDdesignation(),
-            self.__sales[id].getDatsale())
-    def reader(self):
-        for line in self.__finput:
-            if line.startswith('stop'):
-                print('Stopping')
-                return
-            if line.startswith('print'):
-                self.print()
-                continue
-            if line.startswith('new client'):
-                properties = self.__read_properties(self.__client_attributes)
-                client_obj = Clients.clients(properties)
-                self.__clients[' '] = client_obj
-                continue
-            if line.startswith('new product'):
-                print('Adding new product')
-                continue
-            if line.startswith('new sale'):
-                print('Adding new sale')
-                continue
-            if line.startswith('del client'):
-                print('Deleting client')
-                continue
-            if line.startswith('del product'):
-                print('Deleting product')
-                continue
-            if line.startswith('del sale'):
-                print('Deleting sale')
-                continue
-            print('Invalid command given: {}'.format(line))
+        self.__print_elements('Клиенты:', self.__clients)
+        self.__print_elements('Продукты:', self.__products)
+        self.__print_elements('Продажи:', self.__sales)
 
     def __read_properties(self, properties):
         finput = fileinput.FileInput()
         obj = dict()
         for prop in properties:
-            obj[prop] = input('Input value for property: {}'.format(prop))
+            if not prop in self.__skip_attributes:
+                obj[prop] = input('Введите значение для свойства: {}: '.format(prop))
         return obj
+
+    def __add_element(self, eldict, obj):
+        '''
+        Добавить элемент с новым ключом в OrderedDict
+        '''
+        incremented_key = int(next(reversed(eldict))) + 1
+        eldict[incremented_key] = obj
+
+    def __remove_element(self, dict_val, del_index):
+        del dict_val[del_index]
+
+    def __check_client_used(self, client_index):
+        client = self.__clients[client_index]
+        for key, val in self.__sales.items():
+            if client is val.getClient():
+                return True
+        return False
+
+    def __check_product_used(self, product_index):
+        product = self.__products[product_index]
+        for key, val in self.__sales.items():
+            if product is val.getProduct():
+                return True
+        return False
+
+    def reader(self):
+        for line in self.__finput:
+            if line.startswith('stop'):
+                print('Stopping')
+                break
+            if line.startswith('print'):
+                self.print()
+                continue
+            if line.startswith('new client'):
+                properties = self.__read_properties(self.__client_attributes)
+                client_obj = Client.client(properties)
+                self.__add_element(self.__clients, client_obj)
+                continue
+            if line.startswith('new product'):
+                print('Adding new product')
+                properties = self.__read_properties(self.__product_attributes)
+                product_obj = Product.product(properties)
+                self.__add_element(self.__products, product_obj)
+                continue
+            if line.startswith('new sale'):
+                print('Adding new sale')
+                properties = self.__read_properties(self.__sale_attributes)
+                sale_obj = Sale.sale(properties, self.__products, self.__clients)
+                self.__add_element(self.__sales, sale_obj)
+                continue
+            if line.startswith('del client'):
+                print('Deleting client')
+                del_index = input('ID удаляемого объекта: ')
+                if self.__check_client_used(del_index):
+                    print('Клиент используется, невозможно удалить')
+                else:
+                    self.__remove_element(self.__clients, del_index)
+                continue
+            if line.startswith('del product'):
+                print('Deleting product')
+                del_index = input('ID удаляемого объекта: ')
+                if self.__check_product_used(del_index):
+                    print('Продукт используется, невозможно удалить')
+                else:
+                    self.__remove_element(self.__products, del_index)
+                continue
+            if line.startswith('del sale'):
+                print('Deleting sale')
+                del_index = input('ID удаляемого объекта: ')
+                self.__remove_element(self.__sales, del_index)
+                continue
+            print('Неопознанная команда: {}'.format(line))
+        fileinput.close()
+
