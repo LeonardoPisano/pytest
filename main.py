@@ -34,7 +34,7 @@ def main(argv):
     if args.sqlite:
         application.run_from_sqlite(args.sqlite)
 
-        application.rep()
+    application.rep()
 
     if args.toxml:
         application.save_to_xml(args.toxml)
