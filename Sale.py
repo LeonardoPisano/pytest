@@ -4,58 +4,41 @@ class sale:                #класс продаж
         self.__client = clientdict[propdict['client']]
         self.__datsale = propdict['datsale']
         self.__datdelivery = propdict['datdelivery']
+        self.__quantity = propdict['quantity']
 
     def __str__(self):
         return '\"{}\" \"{}\"'.format(self.__product,
             self.__client)
 
     def setProduct(self,value):                        #Устанавливает значение атрибутов
-        '''
-        Установить ссылку на объек типа product с идентификатором ID
-        '''
         self.__product=value
 
     def setClient(self,value):
-        '''
-        Установить ID покупателя.
-        '''
         self.__client=value
 
     def setDatsale(self,value):
-        '''
-        Установить дату продажи.
-        '''
         self.__datsale=value
 
     def setDatdelivery(self,value):
-        '''
-        Установить дату доставки.
-        '''
         self.__datdelivery=value
 
+    def setQuantity(self,value):
+        self.__quantity=value
+
     def getProduct(self):                                #Возвращает значение атрибутов
-        '''
-        Возвращаем название продукта.
-        '''
         return self.__product
 
     def getClient(self):
-        '''
-        Возвращаем имя клиента.
-        '''
         return self.__client
 
     def getDatsale(self):
-        '''
-        Возвращаем значение дату продажи.
-        '''
         return self.__datsale
 
     def getDatdelivery(self):
-        '''
-        Возвращаем дату  доставки.
-        '''
         return self.__datdelivery
+
+    def getQuantity(self):
+        return self.__quantity
 
     def as_dict(self):
         '''
@@ -64,5 +47,5 @@ class sale:                #класс продаж
         return { 'product': self.__product,
             'client': self.__client,
             'datsale': self.__datsale,
-            'datdelivery': self.__datdelivery }
-
+            'datdelivery': self.__datdelivery,
+            'quantity': self.__quantity }

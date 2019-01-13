@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.6
-import xml.dom.minidom as md   #Стандартная поставка в python
+import xml.dom.minidom as md
 import argparse     #модуль для обработки аргументов командной строки
 import sys          #предоставляет системе особые параметры и функции
 
@@ -43,4 +43,3 @@ def main(argv):
 
 if __name__ == '__main__':
     main(sys)     #список аргументов командной строки
-

@@ -12,8 +12,8 @@ class client:                #класс клиентов
         self.setPermanent(propdict['permanent'])
 
     def __str__(self):
-        return '\"{} {} {}\"'.format(self.__name,
-            self.__surname,
+        return '\"{} {} {}\"'.format(self.__surname,
+            self.__name,
             self.__secname)
 
     def setSurname (self,value):                 #Устанавливает значение атрибутов (экземпляры)

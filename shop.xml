@@ -52,19 +52,21 @@
 			client="1"
 			datsale="12.11.2015"
 			datdelivery="12.11.2016"
-			number="5"/>
+			quantity="5"
+            id="1"/>
 		<sale
 			product="2"
 			client="2"
 			datsale="16.11.2018"
 			datdelivery="19.11.2018"
-			number="9"/>
+			quantity="9"
+            id="2"/>
 		<sale
 			product="3"
 			client="2"
 			datsale="23.06.2017"
 			datdelivery="30.06.2017"
-			number="7"/>
+			quantity="7"
+            id="3"/>
 	</sales>
 </shop>
-

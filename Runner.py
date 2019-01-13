@@ -26,8 +26,9 @@ class runner:
         'client',
         'datsale',
         'datdelivery',
-        'number')
-    __skip_attributes = ('id', 'number')
+        'quantity',
+        'id')
+    __skip_attributes = ('id')
     __source_path = ''
     __clients = dict()
     __products = dict()
@@ -76,7 +77,7 @@ class runner:
         for sale in sales:
             try:
                 sale_obj = Sale.sale(sale, self.__products, self.__clients)
-                self.__sales[sale['number']] = sale_obj
+                self.__sales[sale['id']] = sale_obj
             except:
                 if not sale['product'] in self.__products.keys():
                     print('Missing product reference: {}'.format(sale['product']))
