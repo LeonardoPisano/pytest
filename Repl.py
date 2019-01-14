@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+from sys import stdin, stdout
 import fileinput
 
 import Client
@@ -40,6 +40,12 @@ class repl:
         for key, val in dict_val.items():
             print('{} {}'.format(key, val))
 
+    def __print_obj(self, odict, dict_key):
+        try:
+            print('{} {}'.format(dict_key, odict[dict_key]))
+        except:
+            print('No such object.')
+
     def print(self):
         self.__print_elements('Клиенты:', self.__clients)
         self.__print_elements('Продукты:', self.__products)
@@ -78,12 +84,23 @@ class repl:
         return False
 
     def reader(self):
-        for line in self.__finput:
+        line = ''
+        while True:
+            line = input('> ')
             if line.startswith('stop'):
                 print('Stopping')
                 break
             if line.startswith('print'):
-                self.print()
+                pargs = line.split()
+                if len(pargs) == 3:
+                    if pargs[1] == 'client':
+                        self.__print_obj(self.__clients, pargs[2])
+                    if pargs[1] == 'product':
+                        self.__print_obj(self.__products, pargs[2])
+                    if pargs[1] == 'sale':
+                        self.__print_obj(self.__sales, pargs[2])
+                else:
+                    self.print()
                 continue
             if line.startswith('new client'):
                 properties = self.__read_properties(self.__client_attributes)
@@ -124,5 +141,4 @@ class repl:
                 self.__remove_element(self.__sales, del_index)
                 continue
             print('Неопознанная команда: {}'.format(line))
-        fileinput.close()
 

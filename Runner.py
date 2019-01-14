@@ -111,7 +111,14 @@ class runner:
         '''
         Сохранить результаты работы в базу данных SQLite3.
         '''
-        print('Save to sqlite')
+        database = Database.db(dbfile,
+            self.__clients,
+            self.__products,
+            self.__sales,
+            self.__client_attributes,
+            self.__product_attributes,
+            self.__sale_attributes)
+        database.save()
 
 
     def rep(self):
