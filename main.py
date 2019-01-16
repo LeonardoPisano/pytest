@@ -29,16 +29,20 @@ def main(argv):
         help='Сохранить данные в базу данных SQLite3')
     args = parser.parse_args()
     application = Runner.runner()
-    if args.xml:
-        application.run_from_xml(args.xml, 'shop')
     if args.sqlite:
+        print('Starting from SQLite3 database.')
         application.run_from_sqlite(args.sqlite)
+    else:
+        print('Starting from XML file.')
+        application.run_from_xml(args.xml, 'shop')
 
     application.rep()
 
     if args.toxml:
+        print('Saving to XML file.')
         application.save_to_xml(args.toxml)
     if args.tosqlite:
+        print('Saving to SQLite3 database.')
         application.save_to_sqlite(args.tosqlite)
 
 if __name__ == '__main__':

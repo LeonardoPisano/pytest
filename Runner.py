@@ -34,7 +34,6 @@ class runner:
     __products = dict()
     __sales = dict()
 
-
     def run_from_xml(self, source, rootnode):
         shop_xml = Parser.parser(source, rootnode)
 
@@ -85,26 +84,39 @@ class runner:
                     print('Missing client reference: {}'.format(sale['client']))
         self.__sales = OrderedDict(sorted(self.__sales.items()))
 
+        #for key, value in self.__sales:
+         #   if value.getClient() in self.__perm.keys():
+          #      self.__perm[value.getClient()] += value.getPrice() * value.getQuantity()
+           # else:
+            #    self.__perm[value.getClient()] = value.getPrice() * value.getQuantity()
+
     def run_from_sqlite(self, dbfile='shop.sqlite3'):
         '''
         Прочитать данные для работы из базы данных SQLite3.
         '''
-        print('Run from sqlite')
+        database = Database.db(dbfile,
+            self.__clients,
+            self.__products,
+            self.__sales,
+            self.__client_attributes,
+            self.__product_attributes,
+            self.__sale_attributes)
+        database.read()
 
     def save_to_xml(self, xmlfile='new.xml'):
         '''
         Сохранить структуры данных в XML файл.
         '''
-        dump = Parser.writer( xmlfile, 'shop')
+        dump = Parser.writer( xmlfile,'shop', self.__clients, self.__products)
         dump.add_group('clients')
         dump.add_group('products')
         dump.add_group('sales')
         for client_key, client_val in self.__clients.items():
-            dump.add_element('clients', 'client', client_val.as_dict())
+            dump.add_element('clients', 'client', client_key, client_val)
         for product_key, product_val in self.__products.items():
-            dump.add_element('products', 'product', product_val.as_dict())
+            dump.add_element('products', 'product', product_key ,product_val)
         for sale_key, sale_val in self.__sales.items():
-            dump.add_element('sales', 'sale', sale_val.as_dict())
+            dump.add_element('sales', 'sale', sale_key ,sale_val)
         dump.dump()
 
     def save_to_sqlite(self, dbfile='db.sqlite3'):
@@ -132,6 +144,6 @@ class runner:
             self.__product_attributes,
             self.__sale_attributes,
             self.__skip_attributes)
+            #self.__perm)
 
         rep.reader()
-

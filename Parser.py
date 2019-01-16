@@ -9,8 +9,13 @@ class writer:
     __dumpname = ''     #имя файла shop.xml в который сохранять данные
     __rootname = ''     #имя корнегого элемента <shop> </shop>
     __rootnode = ''     #корневая нода
+    __clients = dict()
+    __products = dict()
 
-    def __init__(self, dumpname, rootnode):
+    def __init__(self, dumpname,
+                 rootnode,
+                 clients,
+                 products):
         '''
         Создаёт объект XML документа, который должен быть записан
         в файл.
@@ -20,6 +25,8 @@ class writer:
         root = self.__xmldoc.createElement(self.__rootname)                                 #создать элемент
         self.__xmldoc.appendChild(root)                                                     #возвращаем ссылку и дабавляет элемент
         self.__rootnode = self.__xmldoc.getElementsByTagName(self.__rootname)[0]            #собираем нужные части из XML
+        self.__clients = clients
+        self.__products = products
 
     def add_group(self, groupname):
         '''
@@ -28,14 +35,22 @@ class writer:
         xmlgroup = self.__xmldoc.createElement(groupname)
         self.__rootnode.appendChild(xmlgroup)
 
-    def add_element(self, groupname, elemname, attributes):
+    def add_element(self, groupname, elemname, el_key, el_val):
         '''
         Вставляет элемент elemname с атрибутами из словаря attributes в
         группу groupname.
         '''
         subgroup = self.__rootnode.getElementsByTagName(groupname)[0]
         newelem = self.__xmldoc.createElement(elemname)
-        for attr, value in attributes.items():
+        for attr, value in el_val.as_dict().items():
+            if attr == 'client':
+                newelem.setAttribute(attr, list(self.__clients.keys())[list(self.__clients.values()).index(el_val.getClient())])
+                continue
+
+            if attr == 'product':
+                newelem.setAttribute(attr, list(self.__products.keys())[list(self.__products.values()).index(el_val.getProduct())])
+                continue
+
             newelem.setAttribute(attr, value)
         subgroup.appendChild(newelem)
 

@@ -1,4 +1,4 @@
-from sys import stdin, stdout
+from sys import stdin, stdout       #прием данных, вывод данных
 import fileinput
 
 import Client
@@ -16,6 +16,7 @@ class repl:
     __clients = dict()
     __products = dict()
     __sales = dict()
+    #__perm = dict()
 
     __finput = fileinput.FileInput()
 
@@ -27,6 +28,7 @@ class repl:
         product_attributes,
         sale_attributes,
         skip_attributes):
+        #perm):
         self.__clients = clients
         self.__products = products
         self.__sales = sales
@@ -34,6 +36,7 @@ class repl:
         self.__product_attributes = product_attributes
         self.__sale_attributes = sale_attributes
         self.__skip_attributes = skip_attributes
+        #self.__perm = perm
 
     def __print_elements(self, header, dict_val):
         print(header)
