@@ -105,6 +105,7 @@ class db:
         self.__dump_data('products', self.__product_attributes, self.__products)
         self.__dump_data('sales', self.__sale_attributes, self.__sales)
 
+<<<<<<< HEAD
     def __row2dict(self, inrow):
         return dict(zip(inrow.keys(), inrow))
 
@@ -146,3 +147,5 @@ class db:
                 if not sale['client'] in self.__clients.keys():
                     print('Missing client reference: {}'.format(sale['client']))
         self.__sales = OrderedDict(sorted(self.__sales.items()))
+=======
+>>>>>>> cd0dd88086d1e59f8b3e8c9b941ed304cfff0997
