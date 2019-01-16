@@ -46,8 +46,11 @@ class runner:
         # клиентов в объекты клиентов. Это понадобится, чтобы связать
         # айдишники клиентов с продажами.
         for client in clients:
-            client_obj = Client.client(client)                      #обходим конкретные атрибуты определенного клиента
-            self.__clients[client['id']] = client_obj         #соотносим конкретному клиенту ID
+            try:
+                client_obj = Client.client(client)                      #обходим конкретные атрибуты определенного клиента
+                self.__clients[client['id']] = client_obj         #соотносим конкретному клиенту ID
+            except:
+                print('Unable to create client.')
 
         # Преобразуем dict клиентов в OrderedDict
         self.__clients = OrderedDict(sorted(self.__clients.items()))
@@ -60,8 +63,11 @@ class runner:
         # Мапим айдишники продуктов в объекты продуктов. Это нужно
         # для связи продаж с продуктами.
         for product in products:
-            product_obj = Product.product(product)
-            self.__products[product['id']] = product_obj
+            try:
+                product_obj = Product.product(product)
+                self.__products[product['id']] = product_obj
+            except:
+                print('Unable to create product.')
 
         # Преобразуем dict продуктов в defaultdict
         self.__products = OrderedDict(sorted(self.__products.items()))
