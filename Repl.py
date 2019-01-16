@@ -1,4 +1,5 @@
 from sys import stdin, stdout       #прием данных, вывод данных
+from collections import OrderedDict
 import fileinput
 
 import Client
@@ -13,9 +14,9 @@ class repl:
     # автоматически.
     __skip_attributes = []
 
-    __clients = dict()
-    __products = dict()
-    __sales = dict()
+    __clients = OrderedDict()
+    __products = OrderedDict()
+    __sales = OrderedDict()
     #__perm = dict()
 
     __finput = fileinput.FileInput()
@@ -66,7 +67,7 @@ class repl:
         '''
         Добавить элемент с новым ключом в OrderedDict
         '''
-        incremented_key = int(next(reversed(eldict))) + 1
+        incremented_key = int(next(reversed(OrderedDict(sorted(eldict.items()))))) + 1
         eldict[incremented_key] = obj
 
     def __remove_element(self, dict_val, del_index):
@@ -107,20 +108,27 @@ class repl:
                 continue
             if line.startswith('new client'):
                 properties = self.__read_properties(self.__client_attributes)
-                client_obj = Client.client(properties)
-                self.__add_element(self.__clients, client_obj)
+                try:
+                    client_obj = Client.client(properties)
+                    self.__add_element(self.__clients, client_obj)
+                except:
+                    print('Unable to create client.')
                 continue
             if line.startswith('new product'):
-                print('Adding new product')
                 properties = self.__read_properties(self.__product_attributes)
-                product_obj = Product.product(properties)
-                self.__add_element(self.__products, product_obj)
+                try:
+                    product_obj = Product.product(properties)
+                    self.__add_element(self.__products, product_obj)
+                except:
+                    print('Unable to create product')
                 continue
             if line.startswith('new sale'):
-                print('Adding new sale')
                 properties = self.__read_properties(self.__sale_attributes)
-                sale_obj = Sale.sale(properties, self.__products, self.__clients)
-                self.__add_element(self.__sales, sale_obj)
+                try:
+                    sale_obj = Sale.sale(properties, self.__products, self.__clients)
+                    self.__add_element(self.__sales, sale_obj)
+                except:
+                    print('Unable to create sale')
                 continue
             if line.startswith('del client'):
                 print('Deleting client')
