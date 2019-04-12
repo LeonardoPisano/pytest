@@ -36,7 +36,8 @@ def main(argv):
         print('Starting from XML file.')
         application.run_from_xml(args.xml, 'shop')
 
-    application.rep()
+    #application.rep()
+    application.gui()
 
     if args.toxml:
         print('Saving to XML file.')

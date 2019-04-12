@@ -4,6 +4,7 @@ import Client
 import Product
 import Sale
 import Repl            # Читалка команд с терминала
+import gui
 
 import Parser          # Модуль чтения и записи XML.
 
@@ -153,3 +154,14 @@ class runner:
             #self.__perm)
 
         rep.reader()
+
+    def gui(self):
+        interface = gui.gui(self.__clients,
+            self.__products,
+            self.__sales,
+            self.__client_attributes,
+            self.__product_attributes,
+            self.__sale_attributes,
+            self.__skip_attributes)
+        interface.start()
+
