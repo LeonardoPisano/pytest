@@ -1,14 +1,46 @@
+import sys
 from sys import stdin, stdout       #прием данных, вывод данных
 from collections import OrderedDict
 import fileinput
 
+import Client
 # Import PyQt and QtQuick QML interpreter engine
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty, QUrl, QTimer, QDateTime
 
 import Client
 import Product
 import Sale
+
+class clnt(QObject):
+    def __init__(self):
+        QObject.__init__(self)
+    #argChanged = pyqtSignal()
+
+    FullName = pyqtSignal(str, arguments = ['client'])
+
+    #def __init__(self, parent = None):
+        #QObject.__init__(self, parent)
+        #self._arg = ""
+
+    @pyqtProperty(str)
+    def FullName(self):
+        return self.__surname
+
+    #@arg.setter
+    #def text(self, value):
+        #if self.__ == value:
+            #return
+        #self.__arg = value
+        #self.argChanged.emit()
+
+
+    def update_value():
+        obj.arg = "values from PyQt5 :-D : {}".format(QDateTime.currentDateTime().toString())
+
+
 
 class gui:
     __client_attributes = []
@@ -95,10 +127,15 @@ class gui:
         # Initialize simple QML interpreting engine and load the
         # 'main.qml' file.
         app = QGuiApplication([])
+        obj = clnt()
         engine = QQmlApplicationEngine()
+        engine.rootContext().setContextProperty("obj", obj)
         engine.load('main.qml')
         engine.quit.connect(app.quit)
-        app.exec_()
+        #timer = QTimer()
+        #timer.timeout.connect(lambda: None)
+        #timer.start(100)
+        sys.exit(app.exec_())
 #        line = ''
 #        while True:
 #            line = input('> ')
