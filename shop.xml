@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shop>
+	<clients>
+		<client
+			surname="Вековшинина"
+			name="Ольга"
+			secname="Игоревна"
+			address="г. Саратов, ул. Навашина, д. 40/1"
+			phone="89658874009"
+			email="lolololo@mail.ru"
+			permanent="1"
+			id="1"/>
+		<client
+			surname="Чудов"
+			name="Игорь"
+			secname="Игоревич"
+			address="г. Энгельс, ул. Cтепная, д. 126"
+			phone="89372665134"
+			email="nir@sarfsc.ru"
+			permanent="0"
+			id="2"/>
+		<client
+			surname="Береснева"
+			name="Анастасия"
+			secname="Анатольевна"
+			address="г. Нижний Тагил, пр. Вагоностроителей, д. 14"
+			phone="89649981880"
+			email="encorn@gmail.com"
+			permanent="1"
+			id="3"/>
+	</clients>
+	<products>
+		<product
+			designation="Кружка"
+			price="140"
+			unit="шт"
+			id="1"/>
+		<product
+			designation="Вино"
+			price="5000"
+			unit="литр"
+			id="2"/>
+		<product
+			designation="Пистолетик"
+			price="560"
+			unit="шт"
+			id="3"/>
+	</products>
+	<sales>
+		<sale
+			product="1"
+			client="1"
+			datsale="12.11.2015"
+			datdelivery="12.11.2016"
+			quantity="5"
+            id="1"/>
+		<sale
+			product="2"
+			client="2"
+			datsale="16.11.2018"
+			datdelivery="19.11.2018"
+			quantity="9"
+            id="2"/>
+		<sale
+			product="3"
+			client="2"
+			datsale="23.06.2017"
+			datdelivery="30.06.2017"
+			quantity="7"
+            id="3"/>
+	</sales>
+</shop>
