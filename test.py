@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.6
 
+
 from functools import total_ordering
 import random
 from enum import IntEnum
