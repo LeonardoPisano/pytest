@@ -69,76 +69,65 @@ class DeckCard:
 
         return '{} {}'.format(suit[int(self.suit)], card[int(self)])
 
-    def isMinor(self):
-        return int(self.card) <= 10
-
-
-def random_card_factory():
-    card = random.choice(list(Card))
-    suit = random.choice(list(Suit))
-
-    return DeckCard(card, suit)
-
-def yes_no(result):
-    if result:
-        return "бьёт"
-    return "не бьёт"
-
-def sameSuit(card1, card2):
-    return card1.suit == card2.suit
-
-def beats(card1, card2):
-    if (int(card1) > int(card2)) and (card1.suit == card2.suit):
-        return True
-    return False
-
-def beats2(beats, card1, card2, trump):
-    if (card1.suit == trump) and (beats == True):
-        return True
-    elif (card1.suit == trump) and (card1.suit != card2.suit):
-        return True
-    elif (beats == True):
-        return True
-    return False
-    #if card1.suit == trump:
-        #return True
-
-def beatsList(beatlist, card2, trump):
-    winning_card_list = list()
-
-    for card in beatlist:
-        if beats2(card, card2, trump):
-            winning_card_list.append(card)
-
-    return winning_card_list
 
 class Play:
-    def __init__(self):
-        self.card1 = random_card_factory()
-        self.card2 = random_card_factory()
 
-    def run(self):
-        print(self.card1)
-        print(self.card2)
+    def isMinor(self, card):
+        return int(card) <= 10
 
-        print('Младшая карта {}'.format(self.card1.isMinor()))
+    def sameSuit(self, card1, card2):
+        return card1.suit == card2.suit
 
-        same_suit_result = sameSuit(self.card1, self.card2)
-        print('Карты одной масти {}'.format(same_suit_result))
+    def beats(self, card1, card2):
+        if (int(card1) > int(card2)) and (card1.suit == card2.suit):
+            return True
+        return False
 
-        beats_result = yes_no(beats(self.card1, self.card2))
-        print('Карта {} {} карту {}'.format(self.card1, beats_result, self.card2))
-        #print('Карта {} {} карт {}'.format(card1, yes_no(beats(card1, card2)), card2))
+    def beats2(self, beats, card1, card2, trump):
+        if (card1.suit == trump) and (beats == True):
+            return True
+        elif (card1.suit == trump) and (card1.suit != card2.suit):
+            return True
+        elif (beats == True):
+            return True
+        return False
+        #if card1.suit == trump:
+            #return True
 
-        beats2_result = yes_no(beats2(beats(self.card1, self.card2), self.card1, self.card2, Suit.SPADES))
-        print('Карта {} {} карту {}'.format(self.card1, beats2_result, self.card2))
-        #print(a.beatsList(beatlist, card2, Suit.SPADES))
+    def random_card_factory(self):
+        card = random.choice(list(Card))
+        suit = random.choice(list(Suit))
+
+        return DeckCard(card, suit)
+
+    def yes_no(self, result):
+        if result:
+            return "бьёт"
+        return "не бьёт"
+
+    def beatsList(beatlist, card2, trump):
+        winning_card_list = list()
+
+        for card in beatlist:
+            if beats2(card, card2, trump):
+                winning_card_list.append(card)
+
+        return winning_card_list
 
 
 def main():
-    game = Play()
-    game.run()
+    a = Play()
+    card1 = a.random_card_factory()
+    card2 = a.random_card_factory()
+    print(card1)
+    print(card2)
+
+    print('Младшая карта {}'.format(a.isMinor(card1)))
+    print('Карты одной масти {}'.format(a.sameSuit(card1, card2)))
+    print('Карта {} {} карту {}'.format(card1, a.yes_no(a.beats(card1, card2)), card2))
+    #print('Карта {} {} карт {}'.format(card1, yes_no(beats(card1, card2)), card2))
+    print('Карта {} {} карту {}'.format(card1, a.yes_no(a.beats2(a.beats(card1, card2), card1, card2, Suit.SPADES)), card2))
+    #print(a.beatsList(beatlist, card2, Suit.SPADES))
 
 if __name__ == '__main__':
     main()
-
