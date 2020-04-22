@@ -38,6 +38,9 @@ class DeckCard:
     def __lt__(self, other):
         return self.card < other.card
 
+    #def __gt__(self, other):
+        #return ('QWE {} {}'.format(self.card > other.card))
+
     def __eq__(self, other):
         return self.card == other.card
 
@@ -91,14 +94,6 @@ class Play:
         #if card1.suit == trump:
             #return True
 
-    def beatList(self, ca):
-        beatlist = list()
-
-        for ca in beatlist:
-            while ca < 10:
-                beatlist.append(ca)
-        return beatlist
-
     def random_card_factory(self):
         card = random.choice(list(Card))
         suit = random.choice(list(Suit))
@@ -110,10 +105,18 @@ class Play:
             return "бьёт"
         return "не бьёт"
 
+    def beatsList(beatlist, card2, trump):
+        winning_card_list = list()
+
+        for card in beatlist:
+            if beats2(card, card2, trump):
+                winning_card_list.append(card)
+
+        return winning_card_list
+
 
 def main():
     a = Play()
-    ca = a.random_card_factory()
     card1 = a.random_card_factory()
     card2 = a.random_card_factory()
     print(card1)
@@ -124,7 +127,7 @@ def main():
     print('Карта {} {} карту {}'.format(card1, a.yes_no(a.beats(card1, card2)), card2))
     #print('Карта {} {} карт {}'.format(card1, yes_no(beats(card1, card2)), card2))
     print('Карта {} {} карту {}'.format(card1, a.yes_no(a.beats2(a.beats(card1, card2), card1, card2, Suit.SPADES)), card2))
-    print(a.beatList(ca))
+    #print(a.beatsList(beatlist, card2, Suit.SPADES))
 
 if __name__ == '__main__':
     main()
