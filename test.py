@@ -126,6 +126,15 @@ def random_player_name():
     return ''.join(random.choice(name_letters) for x in range(5))
 
 
+def card_cost(card, ace_cost=1):
+    if int(card) == 14:
+        return ace_cost
+    elif int(card) > 10:
+        return 10
+
+    return int(card)
+
+
 class Player:
     def __init__(self):
         self.cards = list()
