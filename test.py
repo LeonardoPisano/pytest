@@ -45,7 +45,7 @@ class DeckCard:
         self.suit = suit
 
     def __int__(self):
-        return self.card
+        return int(self.card)
 
     def __lt__(self, other):
         return self.card < other.card
