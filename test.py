@@ -116,11 +116,8 @@ def beats2(card1, card2, trump):
 
 
 def beatsList(beatlist, card2, trump):
-    winning_card_list = list()
-
-    for card in beatlist:
-        if beats2(card, card2, trump):
-            winning_card_list.append(card)
+    mapping_result = list(map(lambda x: x if beats2(x, card2, trump) else False, beatlist))
+    winning_card_list = list(filter(lambda x: x, mapping_result))
 
     return winning_card_list
 
