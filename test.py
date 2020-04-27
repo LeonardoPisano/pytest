@@ -84,10 +84,6 @@ class DeckCard:
     def isMinor(self):
         return int(self.card) <= 10
 
-
-def q(card1, card2):
-    return int(card1) + int(card2)
-
 def random_card_factory():
     card = random.choice(list(Card))
     suit = random.choice(list(Suit))
@@ -103,7 +99,7 @@ def sameSuit(card1, card2):
     return card1.suit == card2.suit
 
 def beats(card1, card2):
-    if (int(card1) > int(card2)) and (card1.suit == card2.suit):
+    if (card1 > card2) and (card1.suit == card2.suit):
         return True
     return False
 
@@ -128,16 +124,57 @@ def beatsList(beatlist, card2, trump):
 
     return winning_card_list
 
-def custom_sum(first, second):
-    return first + second
+def random_player_name():
+    name_letters = 'asdfghjkli'
+    return ''.join(random.choice(name_letters) for x in range(5))
 
 
-def qwe(li):
-    lis = list()
-    for card in li:
-        if int(card) == int(card):
-            lis.append(reduce(lambda x, y: x+y, li))
-    return lis
+class Player:
+    def __init__(self):
+        self.cards = list()
+        self.player_name = random_player_name()
+
+    def _count_score(self, ace_cost=1):
+        score = 0
+
+        for card in self.cards:
+            if int(card) == 14:
+                score += ace_cost
+            elif int(card) > 10:
+                score += 10
+            else:
+                score += int(card)
+
+        return score
+
+
+    def current_score(self):
+        score_variants = list()
+
+        score_variants.append(self._count_score())
+
+        for card in self.cards:
+            if int(card) == 14:
+                score_variants.append(self._count_score(11))
+
+        return score_variants
+
+    def add_card(self, card):
+        self.cards.append(card)
+
+
+def game21():
+    players = [Player() for x in range(0, 3)]
+
+    for player in players:
+        player.add_card(random_card_factory())
+        player.add_card(random_card_factory())
+        player.add_card(random_card_factory())
+
+    for player in players:
+        score = player.current_score()
+        print('Игрок {} набрал {} очков при картах {}'.format(player.player_name, score, player.cards))
+
 
 
 class Play:
@@ -154,9 +191,6 @@ class Play:
         #print(self.card1.__lt__(self.card2))
         #print(self.card1 < self.card2)
 
-        numbers = [3, 4, 6, 9, 34, 12]
-        print(numbers)
-
         random_card_list = [random_card_factory() for x in range(0,10)]
         print(random_card_list)
 
@@ -165,9 +199,6 @@ class Play:
 
         print('Младшая карта {}'.format(self.card1.isMinor()))
 
-        q_r = q(self.card1, self.card2)
-        print(q_r)
-        
         same_suit_result = sameSuit(self.card1, self.card2)
         print('Карты одной масти {}'.format(same_suit_result))
 
@@ -179,9 +210,7 @@ class Play:
 
         print(beatsList(random_card_list, self.card2, Suit.SPADES))
 
-        #!!print(qwe(random_card_list1))
-        result = reduce(custom_sum, numbers)
-        print(result)
+        game21()
 
 def func():
     game = Play()
