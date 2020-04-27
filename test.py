@@ -1,8 +1,20 @@
-#! /usr/bin/env python3.6
+#!/usr/bin/env python3.6
+
+#six        suit - масть
+#seven      deck - колода
+#eight      trump - козырь
+#nine
+#ten
+#eleven - jack      diamonds - бубны
+#twelve - queen     hearts - черви
+#thirteen - king    spades - пики
+#fourteen - ace     clubs - крести
 
 from enum import IntEnum
 import random
 from functools import total_ordering
+from functools import reduce
+import functools
 
 class Card(IntEnum):
     ONE = 1
@@ -38,11 +50,11 @@ class DeckCard:
     def __lt__(self, other):
         return self.card < other.card
 
-    #def __gt__(self, other):
-        #return ('QWE {} {}'.format(self.card > other.card))
-
     def __eq__(self, other):
         return self.card == other.card
+
+    def __add__(self, other):
+        return self.card + other.card
 
     def __repr__(self):
         suit = dict()
@@ -73,6 +85,9 @@ class DeckCard:
         return int(self.card) <= 10
 
 
+def q(card1, card2):
+    return int(card1) + int(card2)
+
 def random_card_factory():
     card = random.choice(list(Card))
     suit = random.choice(list(Suit))
@@ -92,16 +107,17 @@ def beats(card1, card2):
         return True
     return False
 
-def beats2(beats, card1, card2, trump):
-    if (card1.suit == trump) and (beats == True):
+def beats2(card1, card2, trump):
+    if_beats = beats(card1, card2)
+
+    if (card1.suit == trump) and (if_beats == True):
         return True
     elif (card1.suit == trump) and (card1.suit != card2.suit):
         return True
-    elif (beats == True):
+    elif (if_beats == True):
         return True
     return False
-    #if card1.suit == trump:
-        #return True
+
 
 def beatsList(beatlist, card2, trump):
     winning_card_list = list()
@@ -112,6 +128,18 @@ def beatsList(beatlist, card2, trump):
 
     return winning_card_list
 
+def custom_sum(first, second):
+    return first + second
+
+
+def qwe(li):
+    lis = list()
+    for card in li:
+        if int(card) == int(card):
+            lis.append(reduce(lambda x, y: x+y, li))
+    return lis
+
+
 class Play:
     def __init__(self):
         self.card1 = random_card_factory()
@@ -121,24 +149,49 @@ class Play:
         print(self.card1)
         print(self.card2)
 
+        #print(self.card1.__eq__(self.card2))
+        #print(self.card1 == self.card2)
+        #print(self.card1.__lt__(self.card2))
+        #print(self.card1 < self.card2)
+
+        numbers = [3, 4, 6, 9, 34, 12]
+        print(numbers)
+
+        random_card_list = [random_card_factory() for x in range(0,10)]
+        print(random_card_list)
+
+        random_card_list1 = [random_card_factory() for x in range(0,3)]
+        print(random_card_list1)
+
         print('Младшая карта {}'.format(self.card1.isMinor()))
 
+        q_r = q(self.card1, self.card2)
+        print(q_r)
+        
         same_suit_result = sameSuit(self.card1, self.card2)
         print('Карты одной масти {}'.format(same_suit_result))
 
         beats_result = yes_no(beats(self.card1, self.card2))
         print('Карта {} {} карту {}'.format(self.card1, beats_result, self.card2))
-        #print('Карта {} {} карт {}'.format(card1, yes_no(beats(card1, card2)), card2))
 
-        beats2_result = yes_no(beats2(beats(self.card1, self.card2), self.card1, self.card2, Suit.SPADES))
+        beats2_result = yes_no(beats2(self.card1, self.card2, Suit.SPADES))
         print('Карта {} {} карту {}'.format(self.card1, beats2_result, self.card2))
-        #print(a.beatsList(beatlist, card2, Suit.SPADES))
 
+        print(beatsList(random_card_list, self.card2, Suit.SPADES))
 
-def main():
+        #!!print(qwe(random_card_list1))
+        result = reduce(custom_sum, numbers)
+        print(result)
+
+def func():
     game = Play()
     game.run()
 
+def higher_order_function(func_param):
+    func_param()
+
+def main():
+    higher_order_function(func)
+
 if __name__ == '__main__':
     main()
-
